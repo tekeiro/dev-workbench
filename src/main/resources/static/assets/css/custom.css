@@ -1,0 +1,21 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+    padding-top: 60px;
+}
+
+.ticket-panel input {
+    font-size: 24px;
+    height: 44px;
+}
+
+.ticket-panel .btn {
+    height: 44px;
+}
+
+.link-list {
+    margin: 6px 0;
+}
+
+.link-list a {
+    font-size: 20px;
+}

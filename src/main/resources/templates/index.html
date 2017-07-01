@@ -1,21 +1,48 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
 <head>
     <title>My Dev Workbench</title>
 </head>
 <body>
-<h2>My Tickets</h2>
-<div>
-    <form th:id="promote-link" action="#" th:action="@{/links/traced}" method="post" target="_blank" onclick="window.reload()">
-        <input type="text" name="code" />
-        <button name="promoteLink" type="submit">Go</button>
-    </form>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <div class="panel panel-default ticket-panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">My Tickets</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <form th:id="promote-link" action="#" th:action="@{/links/traced}" method="post"
+                              target="_blank"
+                              onclick="window.reload()">
+                            <div class="col-md-11">
+                                <div class="form-group">
+                                    <input type="text" class="form-control col-sm-9" id="code" name="code"
+                                           placeholder="TicketId">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <button name="promoteLink" type="submit" class="btn btn-primary">Go</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 link-list">
+                            <div class="list-group">
+                                <a th:each="link : ${links}"
+                                   th:href="${'/links/traced/code/' + link.code + '/trace'}"
+                                   th:text="${(link.title != null)? link.title : link.code}" target="_blank"
+                                   class="list-group-item">NON-1234</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<ul>
-    <li th:each="link : ${links}">
-        <a th:href="${'/links/traced/code/' + link.code + '/trace'}" th:text="${(link.title != null)? link.title : link.code}" target="_blank" onclick="window.reload()">NON-1234</a>
-    </li>
-</ul>
 </body>
 </html>
