@@ -61,29 +61,31 @@ class TraceableLinkServiceIT {
 
     @Test
     fun `'addTraceableLinkUniqueById' should return created entity`() {
-        val (id, code, uri, lastAccessed, accessCount) = service.addTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://test.de"))
+        val (id, code, uri, title, lastAccessed, accessCount) = service.addTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://test.de", "title"))
         softly.assertThat(id).isNotNull()
         softly.assertThat(code).isEqualTo("TST-1234")
         softly.assertThat(uri).isEqualTo("http://test.de")
+        softly.assertThat(title).isEqualTo("title")
         softly.assertThat(lastAccessed).isNull()
         softly.assertThat(lastAccessed).isNull()
         softly.assertThat(accessCount).isEqualTo(0)
     }
 
     @Test
-    fun `'addTraceableLinkUniqueById' should created entity only once`() {
-        service.addTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://test.de"))
-        service.addTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://test.de"))
+    fun `'addTraceableLinkUniqueById' should created entity only once ignoring modified values`() {
+        service.addTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://test.de", "title"))
+        service.addTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://test2.de", "title2"))
 
         val allTraceableLinks = service.retrieveTraceableLinks()
         softly.assertThat(allTraceableLinks.size).isEqualTo(1)
         softly.assertThat(allTraceableLinks[0].code).isEqualTo("TST-1234")
+        softly.assertThat(allTraceableLinks[0].title).isEqualTo("title")
         softly.assertThat(allTraceableLinks[0].uri).isEqualTo("http://test.de")
     }
 
     @Test
     fun `'updateTraceableLink' should not update ignored fields`() {
-        val createdTraceableLink = repository.save(TraceableLink(code = "TST-1234", uri = "http://test.de"))
+        val createdTraceableLink = repository.save(TraceableLink(code = "TST-1234", uri = "http://test.de", title = "title"))
 
         val expectedLastAccessed = LocalDateTime.now()
         val updatedLink = service.updateTraceableLink(
@@ -95,6 +97,7 @@ class TraceableLinkServiceIT {
 
         softly.assertThat(updatedLink).isNotNull
         softly.assertThat(updatedLink?.code).isEqualTo("TST-1234")
+        softly.assertThat(updatedLink?.title).isEqualTo("title")
         softly.assertThat(updatedLink?.uri).isEqualTo("http://test.de")
         softly.assertThat(updatedLink?.lastAccessed).isEqualTo(expectedLastAccessed)
         softly.assertThat(updatedLink?.accessCount).isEqualTo(0)
@@ -102,13 +105,14 @@ class TraceableLinkServiceIT {
 
     @Test
     fun `'updateTraceableLink' should update all fields`() {
-        val createdTraceableLink = repository.save(TraceableLink(code = "TST-1234", uri = "http://test.de"))
+        val createdTraceableLink = repository.save(TraceableLink(code = "TST-1234", uri = "http://test.de", title = "title"))
 
         val expectedLastAccessed = LocalDateTime.now()
         val updatedLink = service.updateTraceableLink(
                 createdTraceableLink.id!!,
                 UpdateTraceableLinkDto(
                         code = UpdateField.of("TST-4321"),
+                        title = UpdateField.of("title2"),
                         lastAccessed = UpdateField.of(expectedLastAccessed),
                         accessCount = UpdateField.of(1)
                 )
@@ -116,22 +120,25 @@ class TraceableLinkServiceIT {
 
         softly.assertThat(updatedLink).isNotNull
         softly.assertThat(updatedLink?.code).isEqualTo("TST-4321")
+        softly.assertThat(updatedLink?.title).isEqualTo("title2")
         softly.assertThat(updatedLink?.lastAccessed).isEqualTo(expectedLastAccessed)
         softly.assertThat(updatedLink?.accessCount).isEqualTo(1)
     }
 
     @Test
     fun `'updateTraceableLink' should update fields to null`() {
-        val createdTraceableLink = repository.save(TraceableLink(code = "TST-1234", uri = "http://test.de", lastAccessed = LocalDateTime.now()))
+        val createdTraceableLink = repository.save(TraceableLink(code = "TST-1234", uri = "http://test.de", title = "title", lastAccessed = LocalDateTime.now()))
 
         val updatedLink = service.updateTraceableLink(
                 createdTraceableLink.id!!,
                 UpdateTraceableLinkDto(
+                        title = UpdateField.setNull(),
                         lastAccessed = UpdateField.setNull())
         )
 
         softly.assertThat(updatedLink).isNotNull
         softly.assertThat(updatedLink?.code).isEqualTo("TST-1234")
+        softly.assertThat(updatedLink?.title).isNull()
         softly.assertThat(updatedLink?.lastAccessed).isNull()
         softly.assertThat(updatedLink?.accessCount).isEqualTo(0)
     }
@@ -148,13 +155,14 @@ class TraceableLinkServiceIT {
 
     @Test
     fun `should record access`() {
-        val createdTraceableLink = repository.save(TraceableLink(code = "TST-1234", uri = "http://test.de"))
+        val createdTraceableLink = repository.save(TraceableLink(code = "TST-1234", uri = "http://test.de", title = "title"))
 
         val createdEntityId = createdTraceableLink.id!!
-        val (id, code, uri, lastAccessed, accessCount) = service.recordLinkAccess(createdEntityId)
+        val (_, code, uri, title, lastAccessed, accessCount) = service.recordLinkAccess(createdEntityId)
 
         softly.assertThat(code).isEqualTo("TST-1234")
         softly.assertThat(uri).isEqualTo("http://test.de")
+        softly.assertThat(title).isEqualTo("title")
         softly.assertThat(lastAccessed).isNotNull()
         softly.assertThat(accessCount).isEqualTo(1)
     }

@@ -27,7 +27,7 @@ apply plugin: 'propdeps-eclipse'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
-ext["thymeleaf.version"] = "3.0.2.RELEASE"
+ext["thymeleaf.version"] = "3.0.6.RELEASE"
 ext["thymeleaf-layout-dialect.version"] = "2.0.1"
 
 jar {
@@ -94,10 +94,18 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
     compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
 
+    compile('org.hibernate:hibernate-java8')
+
     compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.8.7")
 
     compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.0.RELEASE")
     compile("io.github.jpenren:thymeleaf-spring-data-dialect:3.1.1")
+    compile('org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.0.RELEASE')
+    compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE')
+
+    compile('org.webjars:bootstrap:3.3.7')
+    compile('org.webjars:font-awesome:4.7.0')
+    compile('org.webjars:webjars-locator')
 
     compile('com.fasterxml.jackson.dataformat:jackson-dataformat-yaml')
 

@@ -34,7 +34,9 @@ class TraceableLinksController(val jiraConfiguration: JiraConfiguration, val tra
             log.debug("Promoting link with code {}", code)
 
             val uri = "${jiraConfiguration.baseUri}/${code}"
-            traceableLinkService.addTraceableLinkUniqueById(CreateTraceableLinkDto(code, uri))
+            val title = null
+
+            traceableLinkService.addTraceableLinkUniqueById(CreateTraceableLinkDto(code, uri, title))
             return followTraceableLink(code, response)
         }
 

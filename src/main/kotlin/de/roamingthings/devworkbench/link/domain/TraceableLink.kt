@@ -21,16 +21,18 @@ internal data class TraceableLink(
         @Id @GeneratedValue val id: Long? = null,
         val code: String,
         val uri: String,
+        val title: String? = null,
         val lastAccessed: LocalDateTime? = null,
         val accessCount: Int = 0) {
 
     @Suppress("unused")
-    private constructor() : this(code = "", uri = "", lastAccessed = null)
+    private constructor() : this(code = "", uri = "", title = null, lastAccessed = null)
 
     fun toDto(): TraceableLinkDto = TraceableLinkDto(
             id = this.id!!,
             code = this.code,
             uri = this.uri,
+            title = this.title,
             lastAccessed = this.lastAccessed,
             accessCount = this.accessCount
     )
@@ -39,6 +41,7 @@ internal data class TraceableLink(
             id = id!!,
             code = dto.code.getOrDefault(code),
             uri = dto.uri.getOrDefault(uri),
+            title = dto.title.getOrNullOrDefault(title),
             lastAccessed = dto.lastAccessed.getOrNullOrDefault(lastAccessed),
             accessCount = dto.accessCount.getOrDefault(accessCount))
 
@@ -48,11 +51,13 @@ internal data class TraceableLink(
                 id = dto.id,
                 code = dto.code,
                 uri = dto.uri,
+                title = dto.title,
                 lastAccessed = dto.lastAccessed)
 
         fun fromDto(dto: CreateTraceableLinkDto) = TraceableLink(
                 id = null,
                 code = dto.code,
-                uri = dto.uri)
+                uri = dto.uri,
+                title = dto.title)
     }
 }

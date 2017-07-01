@@ -73,6 +73,7 @@ internal class JpaTraceableLinkService(val traceableLinkRepository: TraceableLin
                 id = currentTraceableLink.id,
                 code = currentTraceableLink.code,
                 uri = currentTraceableLink.uri,
+                title = currentTraceableLink.title,
                 lastAccessed = LocalDateTime.now(),
                 accessCount = currentTraceableLink.accessCount + 1)
         return traceableLinkRepository.save(updatedTraceableLink).toDto()

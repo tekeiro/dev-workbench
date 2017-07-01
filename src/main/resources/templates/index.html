@@ -14,7 +14,7 @@
 </div>
 <ul>
     <li th:each="link : ${links}">
-        <a th:href="${'/links/traced/code/' + link.code + '/trace'}" th:text="${link.code}" target="_blank" onclick="window.reload()">NON-1234</a>
+        <a th:href="${'/links/traced/code/' + link.code + '/trace'}" th:text="${(link.title != null)? link.title : link.code}" target="_blank" onclick="window.reload()">NON-1234</a>
     </li>
 </ul>
 </body>
