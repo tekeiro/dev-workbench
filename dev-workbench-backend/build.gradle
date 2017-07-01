@@ -107,7 +107,10 @@ dependencies {
     compile('org.webjars:font-awesome:4.7.0')
     compile('org.webjars:webjars-locator')
 
-    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-yaml')
+	compile('com.fasterxml.jackson.module:jackson-module-parameter-names')
+	compile('com.fasterxml.jackson.dataformat:jackson-dataformat-yaml')
+	compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8')
+	compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.6')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
