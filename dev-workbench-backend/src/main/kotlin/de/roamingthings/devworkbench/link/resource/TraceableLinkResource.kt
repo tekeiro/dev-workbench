@@ -1,6 +1,7 @@
 package de.roamingthings.devworkbench.link.resource
 
 import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import de.roamingthings.devworkbench.link.api.TraceableLinkDto
 import org.springframework.hateoas.ResourceSupport
@@ -12,6 +13,7 @@ import java.time.LocalDateTime
  * @author Alexander Sparkowsky [info@roamingthings.de]
  * @version 2017/07/01
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class TraceableLinkResource
 @JsonCreator
 constructor(

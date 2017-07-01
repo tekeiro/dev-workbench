@@ -38,7 +38,11 @@ class TraceableLinkController constructor(val traceableLinkService: TraceableLin
         log.debug("Retrieving traceable links")
 
         val result = traceableLinkService.retrieveTraceableLinks()
-        return ResponseEntity.ok(Resources(result.map { TraceableLinkResource.fromDto(it) }))
+        return ResponseEntity.ok(Resources(result.map {
+            val resource = TraceableLinkResource.fromDto(it)
+            resource.add(linkTo(methodOn(this::class.java).retrieveTraceableLink(it.id)).withSelfRel())
+            resource
+        }))
     }
 
     @GetMapping(value = "{id}")
