@@ -1,0 +1,14 @@
+= Dev Workbench
+
+This web based application provides individual resources like links that are used during software development.
+
+Resources can be grouped and will be automatically sorted depending on their usage.
+
+Sepcial resources like references to Jira tickets can be added easily and are accessible as a sorted list also depending on their usage.
+
+== Resources
+
+https://blog.codecentric.de/en/2017/06/kotlin-spring-working-jpa-data-classes/[Kotlin and Spring: Working with JPA and data classes]
+
+https://blog.codecentric.de/en/2017/04/crud-operations-spring-rest-resources-kotlin/[CRUD operations on Spring REST resources with Kotlin]
+

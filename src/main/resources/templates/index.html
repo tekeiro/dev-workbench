@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>My Dev Workbench</title>
+</head>
+<body>
+<h2>My Tickets</h2>
+<div>
+    <form th:id="promote-link" action="#" th:action="@{/links/traced}" method="post" target="_blank" onclick="window.reload()">
+        <input type="text" name="code" />
+        <button name="promoteLink" type="submit">Go</button>
+    </form>
+</div>
+<ul>
+    <li th:each="link : ${links}">
+        <a th:href="${'/links/traced/code/' + link.code + '/trace'}" th:text="${link.code}" target="_blank" onclick="window.reload()">NON-1234</a>
+    </li>
+</ul>
+</body>
+</html>

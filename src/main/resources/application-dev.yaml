@@ -1,0 +1,27 @@
+spring:
+    devtools:
+        restart:
+            enabled: true
+        livereload:
+            enabled: true
+    jackson:
+        serialization:
+          indent_output: true
+    datasource:
+#        url: jdbc:h2:file:./build/db/dev-workbench-dev;DB_CLOSE_DELAY=-1
+        url: jdbc:h2:mem:dev-workbench-dev-db;DB_CLOSE_ON_EXIT=FALSE
+        username: sa
+        password:
+        driver-class-name: org.h2.Driver
+        platform: h2
+    h2:
+        console:
+            enabled: true
+            path: /console
+    jpa:
+        database: H2
+        show-sql: true
+        hibernate:
+            ddl-auto: update
+    thymeleaf:
+        cache: false
