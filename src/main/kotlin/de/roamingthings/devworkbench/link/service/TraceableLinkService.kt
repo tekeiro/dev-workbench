@@ -21,7 +21,7 @@ interface TraceableLinkService {
 
     fun recordLinkAccess(id: Long): TraceableLinkDto
 
-    fun promoteTraceableLinkByCode(code: String, uri: String)
+    fun promoteTraceableLinkByCode(code: String)
 
     fun traceableLinkForCodeExists(code: String): Boolean
 }

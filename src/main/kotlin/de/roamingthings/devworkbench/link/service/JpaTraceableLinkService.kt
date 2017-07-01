@@ -64,17 +64,12 @@ internal class JpaTraceableLinkService(val traceableLinkRepository: TraceableLin
         return traceableLinkRepository.save(updatedTraceableLink).toDto()
     }
 
-    override fun promoteTraceableLinkByCode(code: String, uri: String) {
+    override fun promoteTraceableLinkByCode(code: String) {
         val traceableLink = traceableLinkRepository.findOneByCode(code)
 
-        val traceableLinkId: Long
         if (traceableLink != null) {
-            traceableLinkId = traceableLink.id!!
-        } else {
-            val createdTraceableLink = addTraceableLinkUniqueById(CreateTraceableLinkDto(code = code, uri = uri))
-            traceableLinkId = createdTraceableLink.id
+            recordLinkAccess(traceableLink.id!!)
         }
-        recordLinkAccess(traceableLinkId)
     }
 
     override fun traceableLinkForCodeExists(code: String): Boolean {

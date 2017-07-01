@@ -24,29 +24,31 @@ import javax.servlet.http.HttpServletResponse
 class TraceableLinksController(val traceableLinkService: TraceableLinkService, val log: Logger) {
 
     @PostMapping
-    fun addTraceableLink(request: HttpServletRequest,
-                         response: HttpServletResponse,
-                         model: Model): String {
+    fun addAndFollowTraceableLink(request: HttpServletRequest,
+                                  response: HttpServletResponse,
+                                  model: Model): String {
         val code: String? = request.getParameter("code")
 
         if (code != null && !code.isEmpty()) {
             log.debug("Promoting link with code {}", code)
 
             val uri = "http://dummy.de"
-            val traceableLinkId = traceableLinkService.addTraceableLinkUniqueById(CreateTraceableLinkDto(code, uri))
+            traceableLinkService.addTraceableLinkUniqueById(CreateTraceableLinkDto(code, uri))
             return followTraceableLink(code, response)
         }
 
         return "redirect:/"
     }
 
-    @RequestMapping(value = "code/{code}/trace",
+    @RequestMapping(
+            value = "code/{code}/trace",
             method = arrayOf(RequestMethod.GET, RequestMethod.POST))
     fun followTraceableLink(@PathVariable("code") code: String, response: HttpServletResponse): String {
         log.debug("Following link with code {}", code)
+
         val traceableLink = traceableLinkService.retrieveByCode(code)
         if (traceableLink != null) {
-            traceableLinkService.promoteTraceableLinkByCode(code, traceableLink.uri)
+            traceableLinkService.promoteTraceableLinkByCode(code)
             return "redirect:" + traceableLink.uri
         }
         return "redirect:/"
