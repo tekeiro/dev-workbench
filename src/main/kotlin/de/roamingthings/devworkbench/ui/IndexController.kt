@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping
 @Controller
 class IndexController(val traceableLinkService: TraceableLinkService, val log: Logger) {
 
-
-
     @GetMapping("/", "/home")
     fun index(model: Model): String {
-        val allLinks = traceableLinkService.retrieveListByRelevance()
+        val allLinks = traceableLinkService.retrieveListByRelevanceWithLimit(5)
         model.addAttribute("links", allLinks)
 
         return "index"

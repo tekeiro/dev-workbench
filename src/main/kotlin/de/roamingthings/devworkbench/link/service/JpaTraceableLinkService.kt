@@ -6,6 +6,7 @@ import de.roamingthings.devworkbench.link.api.UpdateTraceableLinkDto
 import de.roamingthings.devworkbench.link.domain.TraceableLink
 import de.roamingthings.devworkbench.link.repository.TraceableLinkRepository
 import org.slf4j.Logger
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import javax.transaction.Transactional
@@ -58,8 +59,9 @@ internal class JpaTraceableLinkService(val traceableLinkRepository: TraceableLin
         else null
     }
 
-    override fun retrieveListByRelevance(): List<TraceableLinkDto> {
-        return traceableLinkRepository.findAllByOrderByLastAccessedDesc().map { it.toDto() }
+    override fun retrieveListByRelevanceWithLimit(limit: Int): List<TraceableLinkDto> {
+        val pageRequest = PageRequest(0, limit)
+        return traceableLinkRepository.findAllByOrderByLastAccessedDesc(pageRequest).map { it.toDto() }
     }
 
     override fun deleteById(id: Long) {

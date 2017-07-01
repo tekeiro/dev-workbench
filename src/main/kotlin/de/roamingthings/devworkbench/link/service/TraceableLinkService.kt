@@ -17,7 +17,7 @@ interface TraceableLinkService {
 
     fun updateTraceableLink(id: Long, updateRequest: UpdateTraceableLinkDto): TraceableLinkDto?
 
-    fun retrieveListByRelevance(): List<TraceableLinkDto>
+    fun retrieveListByRelevanceWithLimit(limit: Int = 5): List<TraceableLinkDto>
 
     fun deleteById(id: Long)
 
