@@ -1,0 +1,65 @@
+// frontend build.gradle
+
+plugins {
+  id "com.moowork.node" version "1.1.1"
+  id "com.moowork.gulp" version "1.1.1"
+  id "java"
+}
+
+//def generatedWebResources = "${buildDir}/generated-web-resources"
+
+/*sourceSets {
+	main {
+		output.dir(generatedWebResources, builtBy: 'npm_run_build')
+	}
+}*/
+
+// configure gradle-node-plugin
+node {
+  version = '8.1.3'
+  npmVersion = '5.0.3'
+  download = true
+  workDir = file("${project.projectDir}/node")
+  nodeModulesDir = file("${project.projectDir}/")
+}
+
+gulp {
+  workDir = file("${project.projectDir}")
+  colors = true
+  bufferOutput = false
+}
+
+// clean node/node_modules/dist
+task npmClean(type: Delete) {
+  final def webDir = "${rootDir}/dev-workbench-frontend"
+  delete "${webDir}/node"
+  delete "${webDir}/node_modules"
+  delete "${webDir}/dist"
+  delete "${webDir}/coverage"
+}
+task distClean(type: Delete) {
+
+  final def webDir = "${rootDir}/dev-workbench-frontend"
+  delete "${webDir}/dist"
+  delete "${webDir}/coverage"
+  delete "${webDir}/build"
+}
+
+task jar(type: Jar, overwrite: true) {
+  from(fileTree("dist")) {
+    into "META-INF/resources/webjars/dev-workbench-frontend/0.0.1"
+  }
+}
+jar.dependsOn(npm_install)
+jar.dependsOn(npm_run_build)
+
+// clean task for npm
+clean.dependsOn(distClean) //Don't clean npm within clean lifecycle; clean npm manually if needed
+
+// check task for npm
+//check.dependsOn(npm_run_test) //TODO: reactivate testing again
+
+// run all task
+task runAll{}
+runAll.dependsOn(npm_run_start)
+
