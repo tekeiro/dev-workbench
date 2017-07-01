@@ -161,7 +161,7 @@ class TraceableLinkServiceIT {
 
     @Test
     fun `should add traceable link when promoting unknown traceable link`() {
-        service.promoteTraceableLinkByCode("TST-1234")
+        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://test.de"))
 
         Assertions.assertThat(service.retrieveByCode("TST-1234")).isNotNull()
     }
@@ -176,10 +176,10 @@ class TraceableLinkServiceIT {
 
     @Test
     fun `should retrieve all traceable links according to relevance`() {
-        service.promoteTraceableLinkByCode("TST-1234")
-        service.promoteTraceableLinkByCode("TST-5678")
-        service.promoteTraceableLinkByCode("TST-9012")
-        service.promoteTraceableLinkByCode("TST-1234")
+        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://teest.de"))
+        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-5678", "http://teest.de"))
+        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-9012", "http://teest.de"))
+        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://teest.de"))
 
         val allTraceableLinks = service.retrieveListByRelevance()
         softly.assertThat(allTraceableLinks.size).isEqualTo(3)

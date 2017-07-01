@@ -7,7 +7,11 @@ spring:
     hibernate:
       ddl-auto: update
   jackson:
-      serialization:
-          indent_output: true
-          write_dates_as_timestamps: false
-          write_durations_as_timestamps: false
+    serialization:
+      indent_output: true
+      write_dates_as_timestamps: false
+      write_durations_as_timestamps: false
+
+devworkbench:
+  jira:
+    baseUri:  "https://myjira.de/browse"

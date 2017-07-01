@@ -13,6 +13,8 @@ interface TraceableLinkService {
 
     fun addTraceableLinkUniqueById(createRequest: CreateTraceableLinkDto): TraceableLinkDto
 
+    fun addAndPromoteTraceableLinkUniqueById(createRequest: CreateTraceableLinkDto): TraceableLinkDto
+
     fun updateTraceableLink(id: Long, updateRequest: UpdateTraceableLinkDto): TraceableLinkDto?
 
     fun retrieveListByRelevance(): List<TraceableLinkDto>

@@ -1,5 +1,6 @@
 package de.roamingthings.devworkbench.ui
 
+import de.roamingthings.devworkbench.config.JiraConfiguration
 import de.roamingthings.devworkbench.link.api.CreateTraceableLinkDto
 import de.roamingthings.devworkbench.link.service.TraceableLinkService
 import de.rpr.mycity.web.UI_PATH_TRACEABLE_LINKS
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletResponse
  */
 @Controller
 @RequestMapping(UI_PATH_TRACEABLE_LINKS)
-class TraceableLinksController(val traceableLinkService: TraceableLinkService, val log: Logger) {
+class TraceableLinksController(val jiraConfiguration: JiraConfiguration, val traceableLinkService: TraceableLinkService, val log: Logger) {
 
     @PostMapping
     fun addAndFollowTraceableLink(request: HttpServletRequest,
@@ -32,7 +33,7 @@ class TraceableLinksController(val traceableLinkService: TraceableLinkService, v
         if (code != null && !code.isEmpty()) {
             log.debug("Promoting link with code {}", code)
 
-            val uri = "http://dummy.de"
+            val uri = "${jiraConfiguration.baseUri}/${code}"
             traceableLinkService.addTraceableLinkUniqueById(CreateTraceableLinkDto(code, uri))
             return followTraceableLink(code, response)
         }

@@ -14,7 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 //open class WebSecurityConfig constructor(val userDetailsService : UserDetailsService) : WebSecurityConfigurerAdapter() {
-open class WebSecurityConfig : WebSecurityConfigurerAdapter() {
+class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
 /*
     override fun configure(auth: AuthenticationManagerBuilder) {
