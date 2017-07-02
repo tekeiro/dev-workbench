@@ -28,6 +28,8 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 .antMatchers("/assets/**", "/vendor/**", "/webjars/**", "/console/**").permitAll()
                 .anyRequest().permitAll()
                 .and()
+                .cors()
+                .and()
                 .csrf().disable()
                 .headers().frameOptions().disable()
 

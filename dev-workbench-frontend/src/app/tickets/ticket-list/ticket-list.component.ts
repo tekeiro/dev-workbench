@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TraceableLink } from '../traceable-link.model';
+import {TraceableLinkService} from '../../traceable-link.service';
 
 @Component({
   selector: 'app-ticket-list',
@@ -8,22 +9,13 @@ import { TraceableLink } from '../traceable-link.model';
 })
 export class TicketListComponent implements OnInit {
 
-  ticketLinkList: TraceableLink[] = [
-    new TraceableLink(
-      'TST-1234',
-      'http://test.de/tst-1234',
-      'TST-1234: xxxxxxx'
-    ),
-    new TraceableLink(
-      'TST-5678',
-      'http://test.de/tst-5678',
-      'TST-5678: xxxxxxx'
-    )
-  ];
+  ticketLinkList: TraceableLink[] = [];
 
-  constructor() { }
+  constructor(private _traceableLinkService: TraceableLinkService) {
+  }
 
   ngOnInit() {
+    this._traceableLinkService.getAll().subscribe(linkList => this.ticketLinkList = linkList);
   }
 
 }

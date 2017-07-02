@@ -9,6 +9,7 @@ import { TicketLinkComponent } from './tickets/ticket-link/ticket-link.component
 import { TicketInputComponent } from './tickets/ticket-input/ticket-input.component';
 import { TicketListComponent } from './tickets/ticket-list/ticket-list.component';
 import { HeaderComponent } from './header/header.component';
+import {TraceableLinkService} from './traceable-link.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { HeaderComponent } from './header/header.component';
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [TraceableLinkService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
