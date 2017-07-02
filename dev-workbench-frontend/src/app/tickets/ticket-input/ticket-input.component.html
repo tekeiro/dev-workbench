@@ -1,0 +1,18 @@
+<div class="row">
+  <form>
+    <div class="col-xs-11">
+      <div class="form-group">
+        <input id="code"
+               type="text"
+               name="code"
+               class="form-control col-sm-9"
+               [(ngModel)]="code"
+               placeholder="TicketId">
+      </div>
+      <p>{{queryStatus}}</p>
+    </div>
+    <div class="col-xs-1">
+      <button name="promoteLink" type="submit" class="btn btn-primary" (click)="onPromoteLink()">Go</button>
+    </div>
+  </form>
+</div>
