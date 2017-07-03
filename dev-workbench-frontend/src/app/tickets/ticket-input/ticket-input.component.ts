@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {EmitterService} from '../../emitter.service';
 
 @Component({
   selector: 'app-ticket-input',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ticket-input.component.css']
 })
 export class TicketInputComponent implements OnInit {
+  @Input() id: string;
   queryStatus = '';
   code = '';
 
@@ -16,6 +18,7 @@ export class TicketInputComponent implements OnInit {
 
   onPromoteLink() {
     this.queryStatus = 'Querying for code: ' + this.code;
+    EmitterService.get(this.id).emit(this.code);
   }
 
   onUpdateCode(event) {

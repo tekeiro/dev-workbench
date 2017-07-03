@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
-import { Http, Response } from '@angular/http';
+import {Http, Response} from '@angular/http';
 
 @Injectable()
 export class TraceableLinkService {
@@ -16,27 +16,9 @@ export class TraceableLinkService {
   getAll(): Observable<TraceableLink[]> {
 
     const traceableLinks$ = this.http
-      .get(`${this.baseUrl}/links/traced`, {headers: this.getHeaders()})
+      .get(`${this.baseUrl}/links/traced/relevance`, {headers: this.getHeaders()})
       .map(mapTraceableLinks);
     return traceableLinks$;
-
-    /*    return [
-     new TraceableLink(
-     'TST-1234',
-     'http://test.de/tst-1234',
-     'TST-1234: xxxxxxx'
-     ),
-     new TraceableLink(
-     'TST-5678',
-     'http://test.de/tst-5678',
-     'TST-5678: xxxxxxx'
-     ),
-     new TraceableLink(
-     'TST-9012',
-     'http://test.de/tst-9012',
-     'TST-9012: xxxxxxx'
-     )
-     ];*/
   }
 
   private getHeaders() {
@@ -51,10 +33,8 @@ export class TraceableLinkService {
 function mapTraceableLinks(response: Response): TraceableLink[] {
   // The response of the API has a results
   // property with the actual results
-  const responseValue = response
-    .json();
-
-    return responseValue._embedded.traceableLinkResourceList
+  return response
+    .json()._embedded.traceableLinkResourceList
     .map(toTraceableLink)
 }
 
@@ -69,7 +49,7 @@ function toTraceableLink(r: any): TraceableLink {
   return traceableLink;
 }
 
-function extractId(traceableLinkData: any){
+function extractId(traceableLinkData: any) {
   const extractedId = traceableLinkData.href.replace('http://localhost:8080/api/links/traced/', '').replace('/', '');
   return parseInt(extractedId, 10);
 }

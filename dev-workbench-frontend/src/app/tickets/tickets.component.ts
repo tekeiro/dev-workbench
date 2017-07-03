@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {TraceableLink} from './traceable-link.model';
 
 @Component({
   selector: 'app-tickets',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./tickets.component.css']
 })
 export class TicketPanelComponent {
-
+  public host_id: 'HOST_COMPONENT';
 }

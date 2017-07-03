@@ -5,9 +5,9 @@
         <h3 class="panel-title">My Tickets</h3>
       </div>
       <div class="panel-body">
-        <app-ticket-input></app-ticket-input>
+        <app-ticket-input [id]="host_id"></app-ticket-input>
         <div class="ticket-list">
-          <app-ticket-list></app-ticket-list>
+          <app-ticket-list [id]="host_id"></app-ticket-list>
         </div>
       </div>
     </div>
