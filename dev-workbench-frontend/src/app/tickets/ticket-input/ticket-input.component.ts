@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EmitterService} from '../../emitter.service';
+import {TraceableLinkService} from '../../traceable-link.service';
 
 @Component({
   selector: 'app-ticket-input',
@@ -11,7 +12,7 @@ export class TicketInputComponent implements OnInit {
   queryStatus = '';
   code = '';
 
-  constructor() { }
+  constructor(private _traceableLinkService: TraceableLinkService) { }
 
   ngOnInit() {
   }

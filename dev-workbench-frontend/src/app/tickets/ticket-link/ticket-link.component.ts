@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TraceableLink} from '../traceable-link.model';
+import {TraceableLinkService} from '../../traceable-link.service';
 
 @Component({
   selector: 'app-ticket-link',
@@ -9,9 +10,17 @@ import {TraceableLink} from '../traceable-link.model';
 export class TicketLinkComponent implements OnInit {
   @Input() ticketLink: TraceableLink;
 
-  constructor() { }
+  constructor(private _traceableLinkService: TraceableLinkService) { }
 
   ngOnInit() {
   }
 
+  onLinkClicked() {
+    this._traceableLinkService.promoteLink(this.ticketLink.code).subscribe(followLink)
+  }
+}
+
+function followLink(uri) {
+  console.log('link to follow ' + uri);
+  window.location.href = uri.toString();
 }

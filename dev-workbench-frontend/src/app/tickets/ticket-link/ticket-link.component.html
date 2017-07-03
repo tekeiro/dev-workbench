@@ -1,4 +1,4 @@
-<a class="list-group-item clearfix" href="{{ ticketLink.uri }}">
+<a class="list-group-item clearfix" style="cursor: pointer" (click)="onLinkClicked()">
   <div class="pull-left">
     <h4 class="list-group-item-heading">{{ ticketLink.code }}</h4>
     <p class="list-group-item-text">{{ ticketLink.title }}</p>
