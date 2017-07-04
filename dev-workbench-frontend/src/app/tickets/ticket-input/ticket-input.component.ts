@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {EmitterService} from '../../emitter.service';
 import {TraceableLinkService} from '../../traceable-link.service';
 
@@ -9,8 +9,8 @@ import {TraceableLinkService} from '../../traceable-link.service';
 })
 export class TicketInputComponent implements OnInit {
   @Input() id: string;
+  @ViewChild('codeInput') codeInput: ElementRef;
   queryStatus = '';
-  code = '';
 
   constructor(private _traceableLinkService: TraceableLinkService) { }
 
@@ -18,12 +18,7 @@ export class TicketInputComponent implements OnInit {
   }
 
   onPromoteLink() {
-    this.queryStatus = 'Querying for code: ' + this.code;
-    EmitterService.get(this.id).emit(this.code);
+    this.queryStatus = 'Querying for code: ' + this.codeInput.nativeElement.value;
+    EmitterService.get(this.id).emit(this.nativeElement.value);
   }
-
-  onUpdateCode(event) {
-    this.code = event.target.value;
-  }
-
 }
