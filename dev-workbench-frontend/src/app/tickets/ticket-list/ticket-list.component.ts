@@ -21,11 +21,11 @@ export class TicketListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    EmitterService.get(this.id).subscribe(value => console.log(value));
+    EmitterService.get(this.id).subscribe(code => this.refreshLinkList());
   }
 
   private refreshLinkList() {
-    this._traceableLinkService.getAll().subscribe(linkList => this.ticketLinkList = linkList);
+    this._traceableLinkService.getAllByRelevance().subscribe(linkList => this.ticketLinkList = linkList);
   }
 
 }

@@ -19,7 +19,6 @@ export class TicketInputComponent implements OnInit {
   onPromoteLink(codeInput: HTMLInputElement) {
     const code = codeInput.value;
     codeInput.value = '';
-    EmitterService.get(this.id).emit(code);
-    this._traceableLinkService.promoteLink(code).subscribe(FollowLink);
+    this._traceableLinkService.promoteLink(code).subscribe(link => {EmitterService.get(this.id).emit(code); FollowLink(link)});
   }
 }

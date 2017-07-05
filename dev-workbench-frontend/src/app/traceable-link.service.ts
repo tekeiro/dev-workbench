@@ -13,8 +13,7 @@ export class TraceableLinkService {
   constructor(private http: Http) {
   }
 
-  getAll(): Observable<TraceableLink[]> {
-
+  getAllByRelevance(): Observable<TraceableLink[]> {
     const traceableLinks$ = this.http
       .get(`${this.baseUrl}/links/traced/relevance`, {headers: this.getHeaders()})
       .map(mapTraceableLinks);
@@ -52,7 +51,6 @@ function toTraceableLink(r: any): TraceableLink {
     uri: r.uri,
     title: r.title
   });
-  console.log('Parsed traceableLink:', traceableLink);
   return traceableLink;
 }
 
