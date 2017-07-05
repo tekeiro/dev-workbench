@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {EmitterService} from '../../emitter.service';
 import {TraceableLinkService} from '../../traceable-link.service';
+import {FollowLink} from '../../link-forwarder';
 
 @Component({
   selector: 'app-ticket-input',
@@ -9,23 +10,16 @@ import {TraceableLinkService} from '../../traceable-link.service';
 })
 export class TicketInputComponent implements OnInit {
   @Input() id: string;
-  @ViewChild('codeInput') codeInput: ElementRef;
-  queryStatus = '';
 
   constructor(private _traceableLinkService: TraceableLinkService) { }
 
   ngOnInit() {
   }
 
-  onPromoteLink() {
-    const code = this.codeInput.nativeElement.value;
-    this.queryStatus = 'Querying for code: ' + code;
+  onPromoteLink(codeInput: HTMLInputElement) {
+    const code = codeInput.value;
+    codeInput.value = '';
     EmitterService.get(this.id).emit(code);
-    this._traceableLinkService.promoteLink(code).subscribe(followLink);
+    this._traceableLinkService.promoteLink(code).subscribe(FollowLink);
   }
-}
-
-function followLink(uri) {
-  console.log('link to follow ' + uri);
-  window.location.href = uri.toString();
 }
