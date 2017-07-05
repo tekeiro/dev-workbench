@@ -27,7 +27,6 @@ export class TraceableLinkService {
       .map(response => response.text())
   }
 
-
   private getHeaders() {
     // I included these headers because otherwise FireFox
     // will request text/html instead of application/json

@@ -31,7 +31,7 @@ internal class JpaTraceableLinkService(val traceableLinkRepository: TraceableLin
         return traceableLinkRepository.findAll().map { it.toDto() }
     }
 
-    override fun addTraceableLinkUniqueById(createRequest: CreateTraceableLinkDto): TraceableLinkDto {
+    override fun addTraceableLinkUniqueByCode(createRequest: CreateTraceableLinkDto): TraceableLinkDto {
         if (!traceableLinkRepository.existsByCode(createRequest.code)) {
             return traceableLinkRepository.save(TraceableLink.fromDto(createRequest)).toDto()
         } else {
@@ -39,7 +39,7 @@ internal class JpaTraceableLinkService(val traceableLinkRepository: TraceableLin
         }
     }
 
-    override fun addAndPromoteTraceableLinkUniqueById(createRequest: CreateTraceableLinkDto): TraceableLinkDto {
+    override fun addAndPromoteTraceableLinkUniqueByCode(createRequest: CreateTraceableLinkDto): TraceableLinkDto {
         val traceableLinkDto: TraceableLinkDto
 
         if (!traceableLinkRepository.existsByCode(createRequest.code)) {

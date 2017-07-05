@@ -70,7 +70,7 @@ class TraceableLinkController constructor(val jiraConfiguration: JiraConfigurati
     fun addTraceableLink(@RequestBody traceableLink: CreateTraceableLinkDto, uriBuilder: UriComponentsBuilder): HttpEntity<TraceableLinkResource> {
         log.debug("Request to add a city")
 
-        val result = traceableLinkService.addTraceableLinkUniqueById(traceableLink)
+        val result = traceableLinkService.addTraceableLinkUniqueByCode(traceableLink)
         val resource = TraceableLinkResource.fromDto(result)
         resource.add(linkTo(methodOn(this::class.java).retrieveTraceableLink(result.id)).withSelfRel())
         return ResponseEntity
@@ -103,8 +103,7 @@ class TraceableLinkController constructor(val jiraConfiguration: JiraConfigurati
             val uri = "${jiraConfiguration.baseUri}/${code}"
             val title = null
 
-            val traceabeleLink = traceableLinkService.addTraceableLinkUniqueById(CreateTraceableLinkDto(code, uri, title))
-            traceableLinkService.promoteTraceableLinkByCode(code)
+            val traceabeleLink = traceableLinkService.addAndPromoteTraceableLinkUniqueByCode(CreateTraceableLinkDto(code, uri, title))
             return traceabeleLink.uri
         }
 

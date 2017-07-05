@@ -18,7 +18,14 @@ export class TicketInputComponent implements OnInit {
   }
 
   onPromoteLink() {
-    this.queryStatus = 'Querying for code: ' + this.codeInput.nativeElement.value;
-    EmitterService.get(this.id).emit(this.codeInput.nativeElement.value);
+    const code = this.codeInput.nativeElement.value;
+    this.queryStatus = 'Querying for code: ' + code;
+    EmitterService.get(this.id).emit(code);
+    this._traceableLinkService.promoteLink(code).subscribe(followLink);
   }
+}
+
+function followLink(uri) {
+  console.log('link to follow ' + uri);
+  window.location.href = uri.toString();
 }

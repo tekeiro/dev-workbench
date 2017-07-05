@@ -61,7 +61,7 @@ class TraceableLinkServiceIT {
 
     @Test
     fun `'addTraceableLinkUniqueById' should return created entity`() {
-        val (id, code, uri, title, lastAccessed, accessCount) = service.addTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://test.de", "title"))
+        val (id, code, uri, title, lastAccessed, accessCount) = service.addTraceableLinkUniqueByCode(CreateTraceableLinkDto("TST-1234", "http://test.de", "title"))
         softly.assertThat(id).isNotNull()
         softly.assertThat(code).isEqualTo("TST-1234")
         softly.assertThat(uri).isEqualTo("http://test.de")
@@ -73,8 +73,8 @@ class TraceableLinkServiceIT {
 
     @Test
     fun `'addTraceableLinkUniqueById' should created entity only once ignoring modified values`() {
-        service.addTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://test.de", "title"))
-        service.addTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://test2.de", "title2"))
+        service.addTraceableLinkUniqueByCode(CreateTraceableLinkDto("TST-1234", "http://test.de", "title"))
+        service.addTraceableLinkUniqueByCode(CreateTraceableLinkDto("TST-1234", "http://test2.de", "title2"))
 
         val allTraceableLinks = service.retrieveTraceableLinks()
         softly.assertThat(allTraceableLinks.size).isEqualTo(1)
@@ -169,14 +169,14 @@ class TraceableLinkServiceIT {
 
     @Test
     fun `should add traceable link when promoting unknown traceable link`() {
-        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://test.de"))
+        service.addAndPromoteTraceableLinkUniqueByCode(CreateTraceableLinkDto("TST-1234", "http://test.de"))
 
         Assertions.assertThat(service.retrieveByCode("TST-1234")).isNotNull()
     }
 
     @Test
     fun `should not add traceable link again when promoting known traceable link`() {
-        service.addTraceableLinkUniqueById(CreateTraceableLinkDto(code = "TST-1234", uri = "http://test.de"))
+        service.addTraceableLinkUniqueByCode(CreateTraceableLinkDto(code = "TST-1234", uri = "http://test.de"))
         service.promoteTraceableLinkByCode("TST-1234")
 
         Assertions.assertThat(service.retrieveTraceableLinks().size).isEqualTo(1)
@@ -184,10 +184,10 @@ class TraceableLinkServiceIT {
 
     @Test
     fun `should retrieve all traceable links according to relevance`() {
-        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://test.de"))
-        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-5678", "http://test.de"))
-        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-9012", "http://test.de"))
-        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1234", "http://test.de"))
+        service.addAndPromoteTraceableLinkUniqueByCode(CreateTraceableLinkDto("TST-1234", "http://test.de"))
+        service.addAndPromoteTraceableLinkUniqueByCode(CreateTraceableLinkDto("TST-5678", "http://test.de"))
+        service.addAndPromoteTraceableLinkUniqueByCode(CreateTraceableLinkDto("TST-9012", "http://test.de"))
+        service.addAndPromoteTraceableLinkUniqueByCode(CreateTraceableLinkDto("TST-1234", "http://test.de"))
 
         val allTraceableLinks = service.retrieveListByRelevanceWithLimit()
         softly.assertThat(allTraceableLinks.size).isEqualTo(3)
@@ -198,12 +198,12 @@ class TraceableLinkServiceIT {
 
     @Test
     fun `'retrieveListByRelevanceWithLimit' should limit number of results by default`() {
-        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-1", "http://test.de"))
-        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-2", "http://test.de"))
-        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-3", "http://test.de"))
-        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-4", "http://test.de"))
-        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-5", "http://test.de"))
-        service.addAndPromoteTraceableLinkUniqueById(CreateTraceableLinkDto("TST-6", "http://test.de"))
+        service.addAndPromoteTraceableLinkUniqueByCode(CreateTraceableLinkDto("TST-1", "http://test.de"))
+        service.addAndPromoteTraceableLinkUniqueByCode(CreateTraceableLinkDto("TST-2", "http://test.de"))
+        service.addAndPromoteTraceableLinkUniqueByCode(CreateTraceableLinkDto("TST-3", "http://test.de"))
+        service.addAndPromoteTraceableLinkUniqueByCode(CreateTraceableLinkDto("TST-4", "http://test.de"))
+        service.addAndPromoteTraceableLinkUniqueByCode(CreateTraceableLinkDto("TST-5", "http://test.de"))
+        service.addAndPromoteTraceableLinkUniqueByCode(CreateTraceableLinkDto("TST-6", "http://test.de"))
 
         val relevantLinks = service.retrieveListByRelevanceWithLimit()
         softly.assertThat(relevantLinks.size).isEqualTo(5)
