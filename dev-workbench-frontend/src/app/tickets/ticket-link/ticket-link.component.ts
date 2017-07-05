@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {TraceableLink} from '../traceable-link.model';
 import {TraceableLinkService} from '../../traceable-link.service';
 import {FollowLink} from '../../link-forwarder';
-import {EmitterService} from "../../emitter.service";
+import {EmitterService} from '../../emitter.service';
 
 @Component({
   selector: 'app-ticket-link',
