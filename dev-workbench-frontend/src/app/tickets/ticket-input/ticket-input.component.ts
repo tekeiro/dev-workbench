@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {EmitterService} from '../../emitter.service';
 import {TraceableLinkService} from '../../traceable-link.service';
 
@@ -19,6 +19,6 @@ export class TicketInputComponent implements OnInit {
 
   onPromoteLink() {
     this.queryStatus = 'Querying for code: ' + this.codeInput.nativeElement.value;
-    EmitterService.get(this.id).emit(this.nativeElement.value);
+    EmitterService.get(this.id).emit(this.codeInput.nativeElement.value);
   }
 }
