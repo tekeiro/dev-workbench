@@ -20,13 +20,13 @@ import javax.persistence.Table
 internal data class TraceableLink(
         @Id @GeneratedValue val id: Long? = null,
         val code: String,
-        val uri: String,
+        val uri: String? = null,
         val title: String? = null,
         val lastAccessed: LocalDateTime? = null,
         val accessCount: Int = 0) {
 
     @Suppress("unused")
-    private constructor() : this(code = "", uri = "", title = null, lastAccessed = null)
+    private constructor() : this(code = "", title = null, lastAccessed = null)
 
     fun toDto(): TraceableLinkDto = TraceableLinkDto(
             id = this.id!!,
@@ -40,7 +40,7 @@ internal data class TraceableLink(
     fun updateFromDto(dto: UpdateTraceableLinkDto) = TraceableLink(
             id = id!!,
             code = dto.code.getOrDefault(code),
-            uri = dto.uri.getOrDefault(uri),
+            uri = dto.uri.getOrNullOrDefault(uri),
             title = dto.title.getOrNullOrDefault(title),
             lastAccessed = dto.lastAccessed.getOrNullOrDefault(lastAccessed),
             accessCount = dto.accessCount.getOrDefault(accessCount))

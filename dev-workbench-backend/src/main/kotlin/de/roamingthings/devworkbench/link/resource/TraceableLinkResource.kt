@@ -19,7 +19,7 @@ data class TraceableLinkResource
 constructor(
         @JsonProperty("id") val _id: Long,
         @JsonProperty("code") val code: String,
-        @JsonProperty("uri") val uri: String,
+        @JsonProperty("uri") val uri: String?,
         @JsonProperty("title") val title: String?,
         @JsonProperty("lastAccessed") val lastAccessed: LocalDateTime?,
         @JsonProperty("accessCount") val accessCount: Int) : ResourceSupport() {

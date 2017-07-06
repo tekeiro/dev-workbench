@@ -6,14 +6,14 @@ import java.time.LocalDateTime
 data class TraceableLinkDto(
         val id: Long,
         val code: String,
-        val uri: String,
+        val uri: String?,
         val title: String?,
         val lastAccessed: LocalDateTime?,
         val accessCount: Int)
 
 data class CreateTraceableLinkDto(
         val code: String,
-        val uri: String,
+        val uri: String? = null,
         val title: String? = null
 
 )
