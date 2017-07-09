@@ -3,7 +3,7 @@ package de.roamingthings.devworkbench.link.resource
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
-import de.roamingthings.devworkbench.link.api.TraceableLinkDto
+import de.roamingthings.devworkbench.link.api.LinkDto
 import org.springframework.hateoas.ResourceSupport
 import java.time.LocalDateTime
 
@@ -14,7 +14,7 @@ import java.time.LocalDateTime
  * @version 2017/07/01
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class TraceableLinkResource
+data class LinkResource
 @JsonCreator
 constructor(
         @JsonProperty("id") val _id: Long,
@@ -26,8 +26,8 @@ constructor(
 
     companion object {
 
-        fun fromDto(dto: TraceableLinkDto): TraceableLinkResource =
-                TraceableLinkResource(
+        fun fromDto(dto: LinkDto): LinkResource =
+                LinkResource(
                         _id = dto.id,
                         code = dto.code,
                         uri = dto.uri,

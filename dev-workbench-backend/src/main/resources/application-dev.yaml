@@ -25,3 +25,8 @@ spring:
             ddl-auto: update
     thymeleaf:
         cache: false
+
+debug: true
+
+logging.level.org.hibernate.SQL: debug
+logging.level.org.hibernate.type.descriptor.sql: trace

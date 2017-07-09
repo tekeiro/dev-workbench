@@ -1,0 +1,32 @@
+= API provided by the Developer-Workbench
+
+== Categories
+
+* Create
+* Update
+* Delete including all associated links
+* Retrieve all Categories
+* Retrieve a single category (without links) by id or code
+* Retrieve (weighted) list of links for a given category
+
+== Links
+
+* Create
+* Update
+* Delete
+* Follow/Redirect a link identified by its id
+
+== REST Resources
+
+Create a category:: `POST /api/categories`
+Update a category:: `PUT /api/categories/{id}`
+Delete a category:: `DELETE /api/categories/{id}`
+Retrieve all categories:: `GET /api/categories`
+Retrieve a single category:: `GET /api/categories/{id}`
+Retrieve a single category by its code:: `GET /api/categories/codes/{code}`
+Retrieve a (weighted) list of links for a given category:: `GET /api/categories/{id}/links?mode=relevance`
+Create a link (inside a category):: `POST /api/categories/{id}/links`
+Update a link:: `PUT /api/links/{id}`
+Delete a link:: `PUT /api/links/{id}`
+Follow a link:: `POST /api/links/{id}/redirects`
+
